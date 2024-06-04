@@ -19,7 +19,7 @@ class CategoryCreateSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Category
-        fields = ['name', 'description', 'user']
+        fields = ['name', 'description', 'user', 'parent']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -28,8 +28,17 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email']
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+
+class CategoryParentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'description', 'user']
+        fields = ['id', 'name']
+
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    parent = CategoryParentSerializer()
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'description', 'user', 'parent']
