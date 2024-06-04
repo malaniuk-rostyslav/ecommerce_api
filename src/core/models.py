@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Category Name')
     description = models.TextField(blank=True, null=True, verbose_name='Category Description')
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='subcategories', blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -12,6 +14,7 @@ class Category(models.Model):
 class Attribute(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Attribute Name')
     description = models.TextField(blank=True, null=True, verbose_name='Attribute Description')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -23,6 +26,7 @@ class Product(models.Model):
     main_image = models.ImageField(upload_to='products/main_images/', verbose_name='Main Image')
     categories = models.ManyToManyField(Category, blank=True, related_name='products')
     attributes = models.ManyToManyField(Attribute, through='ProductAttribute', related_name='products')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
