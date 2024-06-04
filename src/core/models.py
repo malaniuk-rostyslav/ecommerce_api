@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Category Name')
-    description = models.TextField(blank=True, null=True, verbose_name='Category Description')
+    description = models.TextField(verbose_name='Category Description')
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='subcategories', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
