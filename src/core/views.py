@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Category, Attribute, Product, ProductPrice, ProductAttribute, ProductImage
 from .serializers import UserCreateSerializer, CategoryCreateSerializer, CategorySerializer, AttributeCreateSerializer, AttributeSerializer, ProductCreateSerializer, ProductSerializer
-from django.db import IntegrityError
 
 
 class SignUpView(APIView):
@@ -18,7 +17,7 @@ class SignUpView(APIView):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
     def get_serializer_class(self):
         if self.action in ['create', 'update']:
@@ -49,7 +48,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 class AttributeViewSet(viewsets.ModelViewSet):
     queryset = Attribute.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
     def get_serializer_class(self):
         if self.action in ['create', 'update']:
