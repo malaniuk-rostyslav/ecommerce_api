@@ -2,13 +2,14 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from .views import SignUpView
-from .views import CategoryViewSet, AttributeViewSet
+from .views import CategoryViewSet, AttributeViewSet, ProductViewSet
 
 
 router = DefaultRouter()
 
 router.register(r'categories', CategoryViewSet)
 router.register(r'attributes', AttributeViewSet)
+router.register(r'products', ProductViewSet)
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
