@@ -127,10 +127,10 @@ class ProductViewSet(viewsets.ModelViewSet):
 
         # Add Price
         ProductPrice.objects.create(product=product, coin_amount=price)
-
+        
         # Add attributes
         for attribute_name, value in attributes.items():
-            attribute_instance, _ = Attribute.objects.get_or_create(name=attribute_name, user=request.user)
+            attribute_instance = Attribute.objects.get(name=attribute_name)
             ProductAttribute.objects.create(product=product, attribute=attribute_instance, value=value)
 
         response_serializer = ProductSerializer(product)
@@ -179,7 +179,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         if attributes:
             instance.productattribute_set.all().delete()
             for attribute_name, value in attributes.items():
-                attribute_instance, _ = Attribute.objects.get_or_create(name=attribute_name)
+                attribute_instance = Attribute.objects.get(name=attribute_name)
                 ProductAttribute.objects.create(product=instance, attribute=attribute_instance, value=value)
 
         response_serializer = ProductSerializer(instance)
